@@ -47,12 +47,12 @@ describe('Linked list test suite', () => {
         list.insert(new ListItem(3));
         list.addFirst(item);
         expect(list.removeFirst()).toBe(item);
-        
+
         list.printList();
         expect(spy).toHaveBeenCalledWith('1 --> 2 --> 3');
     });
     test('Check for remove last method', () => {
-        const item = new ListItem(4)
+        const item = new ListItem(4);
         list.insert(new ListItem(1));
         list.insert(new ListItem(2));
         list.insert(new ListItem(3));
@@ -76,13 +76,13 @@ describe('Linked list test suite', () => {
         list.insert(new ListItem(3));
         list.printList();
         expect(spy).toHaveBeenCalledWith('1 --> 2 --> 3');
-        
+
         list.insert(new ListItem(4), 1);
-        list.printList()
+        list.printList();
         expect(spy).toHaveBeenCalledWith('1 --> 4 --> 2 --> 3');
 
         list.insert(new ListItem(10), 0);
-        list.printList()
+        list.printList();
         expect(spy).toHaveBeenCalledWith('10 --> 1 --> 4 --> 2 --> 3');
     });
 
