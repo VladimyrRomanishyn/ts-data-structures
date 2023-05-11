@@ -14,7 +14,7 @@ export abstract class ListNode<T> {
      * ListNode class constructor.
      * @param params the data of the class or  the class for cloning purpouses.
      *///
-    constructor(params: ListNode<T> | T) {
+    constructor(params: ListNode<L> | T) {
         if (params instanceof ListNode) {
             this.data = params.data;
             this.next = params.next;
