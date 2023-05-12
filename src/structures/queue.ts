@@ -26,7 +26,7 @@ export class Queue<T> {
      * constructor of the `Queue` class.
      * @param element optional element for initialization.
      */
-    constructor(private element?: T) {
+    constructor(element?: T) {
         if (element) {
             this.queue.addFirst(new ListItem<T>(element));
         }
@@ -44,16 +44,16 @@ export class Queue<T> {
      */
     public remove(): T {
         const item = this.queue.removeFirst();
-        return item.data;
+        return item;
     }
     /**
      * Public method to check if the element already in the queue.
      * @param element searched element.
      * @returns searched element or boolean.
      */
-    public contains(element: T): ListItem<T> | boolean {
+    public contains(element: T): boolean {
         const result = this.queue.contains(element);
-        return result instanceof ListItem ? result.data : result;
+        return result;
     }
     /**
      * Public method print in the console queue sequence.
@@ -66,5 +66,11 @@ export class Queue<T> {
      */
     public clear(): void {
         this.queue.clearList();
+    }
+    /**
+     * Public method check emptiness of the queue.
+     */
+    public empty(): boolean {
+        return this.queue.empty();
     }
 }

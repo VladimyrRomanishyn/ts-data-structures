@@ -21,7 +21,7 @@ describe('Linked list test suite', () => {
         expect(list.contains(item)).toBeFalsy();
 
         list.insert(item);
-        expect(list.contains(item)).toBe(item);
+        expect(list.contains(item)).toBe(true);
     });
 
     test('Check for remove method', () => {
@@ -46,7 +46,7 @@ describe('Linked list test suite', () => {
         list.insert(new ListItem(2));
         list.insert(new ListItem(3));
         list.addFirst(item);
-        expect(list.removeFirst()).toBe(item);
+        expect(list.removeFirst()).toBe(item.data);
 
         list.printList();
         expect(spy).toHaveBeenCalledWith('1 --> 2 --> 3');
@@ -57,7 +57,7 @@ describe('Linked list test suite', () => {
         list.insert(new ListItem(2));
         list.insert(new ListItem(3));
         list.insert(item);
-        expect(list.removeLast()).toBe(item);
+        expect(list.removeLast()).toBe(item.data);
         list.printList();
         expect(spy).toHaveBeenCalledWith('1 --> 2 --> 3');
     });

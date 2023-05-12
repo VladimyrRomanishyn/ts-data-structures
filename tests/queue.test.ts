@@ -19,7 +19,7 @@ describe('Queue tests suite', () => {
 
     test('Checks queue contains method', () => {
         queue.add(1);
-        expect(queue.contains(1)).toBe(1);
+        expect(queue.contains(1)).toBe(true);
     });
 
     test('Checks queue print method', () => {

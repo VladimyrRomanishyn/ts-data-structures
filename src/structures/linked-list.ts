@@ -58,6 +58,10 @@ export class LinkedList<T> {
     private compareCb = (a: ListNode<T> | T, b: ListNode<T> | T): boolean =>
         JSON.stringify(a) === JSON.stringify(b);
     /**
+     * Private property the reference to the top element of the list.
+     * */
+    private head: ListNode<T>;
+    /**
      * Private property the reference to the last element of the list.
      * */
     private tail: ListNode<T>;
@@ -65,8 +69,17 @@ export class LinkedList<T> {
      * Linked list class constructor
      * @param head optional element for initialization.
      */
-    constructor(private head?: ListNode<T>) {
-        this.tail = head;
+    constructor(head?: ListNode<T> | T) {
+        if (!head) {
+            return;
+        }
+        if (head instanceof ListNode) {
+            this.head = head;
+        } else {
+            this.head = new ListItem(head);
+        }
+
+        this.tail = this.head;
     }
     /**
      * Public method for printing the list in the console.
@@ -96,7 +109,7 @@ export class LinkedList<T> {
     public contains(
         element: ListNode<T> | T,
         comparator?: (a: ListNode<T> | T, b: ListNode<T> | T) => boolean,
-    ): ListNode<T> | boolean {
+    ): boolean {
         if (!this.head) {
             return false;
         }
@@ -109,7 +122,7 @@ export class LinkedList<T> {
 
         while (target) {
             if (result) {
-                return target;
+                return true;
             }
 
             target = target.next;
@@ -150,28 +163,35 @@ export class LinkedList<T> {
      * Public method to add element in the head of the list.
      * @param element
      */
-    public addFirst(element: ListNode<T>): void {
+    public addFirst(element: ListNode<T> | T): void {
         this.insert(element, 0);
     }
     /**
      * Public method for removing the first element of the list.
      * @returns The first element of the list.
      */
-    public removeFirst(): ListNode<T> {
+    public removeFirst(): T {
         if (!this.head) {
             console.warn('[WARNINIG]: ', 'The list is empty!');
             return;
         }
-        const prevHead = this.head;
-        this.head = this.head.next;
 
-        return prevHead;
+        const prevHead = this.head;
+
+        if (this.head.next) {
+            this.head = this.head.next;
+        } else {
+            this.head = null;
+            this.tail = null;
+        }
+
+        return prevHead.data;
     }
     /**
      * Public method for removing the last element of the list.
      * @returns The last element of the list.
      */
-    public removeLast(): ListNode<T> {
+    public removeLast(): T {
         if (!this.head) {
             console.warn('[WARNINIG]: ', 'The list is empty!');
             return;
@@ -182,7 +202,7 @@ export class LinkedList<T> {
             this.head = null;
             this.tail = null;
 
-            return prevTail;
+            return prevTail.data;
         }
 
         let preTail = this.head;
@@ -196,13 +216,15 @@ export class LinkedList<T> {
         this.tail = preTail;
         preTail.next = null;
 
-        return target;
+        return target.data;
     }
     /**
      * Public method for adding the element to the end of the list.
      * @param element The element to add.
      */
-    public addLast(element: ListNode<T>): void {
+    public addLast(element: ListNode<T> | T): void {
+        element = element instanceof ListNode ? element : new ListItem(element);
+
         if (!this.head) {
             this.head = element;
             this.tail = element;
@@ -216,7 +238,9 @@ export class LinkedList<T> {
      * @param element The element to insert.
      * @param index Optional the index order on the element.
      */
-    public insert(element: ListNode<T>, index?: number): void {
+    public insert(element: ListNode<T> | T, index?: number): void {
+        element = element instanceof ListNode ? element : new ListItem(element);
+
         if (!this.head) {
             this.head = element;
             this.tail = element;
@@ -251,5 +275,11 @@ export class LinkedList<T> {
     public clearList() {
         this.head = null;
         this.tail = null;
+    }
+    /**
+     * Public method to check the emptiness of the list.
+     */
+    public empty(): boolean {
+        return !this.head;
     }
 }

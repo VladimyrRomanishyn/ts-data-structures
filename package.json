@@ -10,7 +10,8 @@
 		"jest": "jest",
 		"jest:watch": "jest --watchAll",
 		"lint": "eslint . --fix",
-		"prettier": "prettier --write ."
+		"prettier": "prettier --write .",
+		"pre-commit": "bash .git/hooks/pre-commit"
 	},
 	"files": [
 		"/dist"
