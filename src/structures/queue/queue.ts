@@ -1,4 +1,4 @@
-import { LinkedList, ListItem } from './linked-list';
+import { LinkedList, ListItem } from '../linked-lists/linked-list';
 /**
  * Queue FIFO type data structure based on linked list.
  *

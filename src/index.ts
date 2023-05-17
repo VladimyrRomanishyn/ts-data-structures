@@ -1,3 +1,7 @@
-export { Stack } from './structures/stack';
-export { Queue } from './structures/queue';
-export { LinkedList, ListNode, ListItem } from './structures/linked-list';
+export { Stack } from './structures/stack/stack';
+export { Queue } from './structures/queue/queue';
+export {
+    LinkedList,
+    ListNode,
+    ListItem,
+} from './structures/linked-lists/linked-list';
