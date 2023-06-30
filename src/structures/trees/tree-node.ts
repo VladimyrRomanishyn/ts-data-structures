@@ -1,13 +1,13 @@
 /**
- * TreeNode class used by trees data structures.
+ * Abstract class the base for Tree Item.
  */
-export class TreeNode<T> {
+export abstract class TreeNode<T, K> {
     /**
      * TreeNode class constructor.
      * @param _data The data of the TreeNode.
      * @param children The children of the TreeNode.
      */
-    constructor(private _data?: T, private children: TreeNode<T>[] = []) {}
+    constructor(private _data?: T, protected children?: K) { }
     /**
      * The getter function for the private _data property.
      */
@@ -22,29 +22,44 @@ export class TreeNode<T> {
         this._data = value;
     }
     /**
-     * Private method returns default searching callback.
+     * Protected method returns default searching callback.
      * @param e The element need to find
      * @returns (s: TreeNode<T>) => boolean
      */
-    private compareCb(e: TreeNode<T> | T): (s: TreeNode<T>) => boolean {
-        e = e instanceof TreeNode ? e.data : e;
-        return (s: TreeNode<T>) => (JSON.stringify(s.data) === JSON.stringify(e));
+    protected compareCb(s: TreeNode<T, K> | T): (e: TreeNode<T, K>) => boolean {
+        s = s instanceof TreeNode ? s.data : s;
+        return (e: TreeNode<T, K>) => JSON.stringify(e.data) === JSON.stringify(s);
     }
     /**
-     * Public method for adding children to the tree node.
+     * Public abstract method for adding children to the tree node.
      * @param child The child of type TreeNode<T> | T to be added to the tree node's children.
      */
-    public addChild(child: TreeNode<T> | T): void {
-        child = child instanceof TreeNode ? child : new TreeNode(child);
-        this.children.push(child);
-    }
+    public abstract addChild(child: TreeNode<T, K> | T): void;
     /**
-     * Public method for removig children from the tree node.
+     * Public abstract method for removig children from the tree node.
      * @param child The child of type TreeNode<T> | T to be removed to the tree node's children.
      * @returns The child of type TreeNode<T> removed from the node's children.
      */
-    public removeChild(child: TreeNode<T> | T, searchCb = this.compareCb): void {
-        const index = this.children.findIndex(searchCb(child));
+    public abstract removeChild(
+        child: TreeNode<T, K> | T,
+        searchCb: (e: TreeNode<T, K> | T) => unknown
+    ): void;
+}
+/**
+ * Class with minimal requirements for TreeItem
+ */
+export class TreeItem<T, K extends TreeItem<T, K>[]> extends TreeNode<T, K> {
+    /**
+     * Public  method for adding children to the tree item.
+     * @param child The child of type TreeNode<T> | T to be added to the tree items's children.
+     */
+    public addChild(child: TreeNode<T, K> | T): void {
+        child = child instanceof TreeNode ? child : new TreeItem(child);
+        this.children.push(child);
+    }
+
+    public removeChild(child: T | TreeNode<T, K>, searchCb: (e: T | TreeNode<T, K>) => boolean = this.compareCb(child)): void {
+        const index = this.children.findIndex(searchCb);
 
         if (index < 0) {
             console.error('The element is not child of the node!');
