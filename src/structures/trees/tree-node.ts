@@ -7,7 +7,7 @@ export abstract class TreeNode<T, K> {
      * @param _data The data of the TreeNode.
      * @param children The children of the TreeNode.
      */
-    constructor(private _data?: T, protected children?: K) { }
+    constructor(private _data?: T, protected children?: K) {}
     /**
      * The getter function for the private _data property.
      */
@@ -28,7 +28,8 @@ export abstract class TreeNode<T, K> {
      */
     protected compareCb(s: TreeNode<T, K> | T): (e: TreeNode<T, K>) => boolean {
         s = s instanceof TreeNode ? s.data : s;
-        return (e: TreeNode<T, K>) => JSON.stringify(e.data) === JSON.stringify(s);
+        return (e: TreeNode<T, K>) =>
+            JSON.stringify(e.data) === JSON.stringify(s);
     }
     /**
      * Public abstract method for adding children to the tree node.
@@ -42,7 +43,7 @@ export abstract class TreeNode<T, K> {
      */
     public abstract removeChild(
         child: TreeNode<T, K> | T,
-        searchCb: (e: TreeNode<T, K> | T) => unknown
+        searchCb: (e: TreeNode<T, K> | T) => unknown,
     ): void;
 }
 /**
@@ -58,7 +59,10 @@ export class TreeItem<T, K extends TreeItem<T, K>[]> extends TreeNode<T, K> {
         this.children.push(child);
     }
 
-    public removeChild(child: T | TreeNode<T, K>, searchCb: (e: T | TreeNode<T, K>) => boolean = this.compareCb(child)): void {
+    public removeChild(
+        child: T | TreeNode<T, K>,
+        searchCb: (e: T | TreeNode<T, K>) => boolean = this.compareCb(child),
+    ): void {
         const index = this.children.findIndex(searchCb);
 
         if (index < 0) {

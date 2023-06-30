@@ -26,7 +26,7 @@ export abstract class ListNode<T> {
 /**
  * Class with minimal requierments for Linked List item.
  */
-export class ListItem<T> extends ListNode<T> { }
+export class ListItem<T> extends ListNode<T> {}
 /**
  * Linked list data structure.
  *

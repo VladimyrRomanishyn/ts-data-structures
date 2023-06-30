@@ -1,3 +1,1 @@
-export class Tree<T> {
-    
-}
+export class Tree<T> {}
